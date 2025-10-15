@@ -1,0 +1,3 @@
+# Este archivo mantiene el directorio database/ en Git
+# La base de datos mectrack.db se creará al ejecutar: npm run init-db
+

@@ -1,0 +1,60 @@
+# MecTrack - DreamHost Apache Configuration
+# This file configures Apache to work with the Node.js application
+
+# Passenger configuration (if using Passenger)
+PassengerEnabled on
+PassengerAppType node
+PassengerStartupFile server.js
+PassengerAppRoot /home/USERNAME/mectrack
+
+# If not using Passenger, use proxy to Node.js server
+<IfModule !mod_passenger.c>
+    RewriteEngine On
+    
+    # Don't rewrite static files
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    
+    # Proxy all other requests to Node.js
+    RewriteRule ^(.*)$ http://localhost:3000/$1 [P,L]
+    
+    # Set proxy headers
+    <IfModule mod_headers.c>
+        RequestHeader set X-Forwarded-Proto "https"
+        RequestHeader set X-Forwarded-Host "%{HTTP_HOST}e"
+        RequestHeader set X-Real-IP "%{REMOTE_ADDR}e"
+    </IfModule>
+</IfModule>
+
+# MIME types
+AddType application/json .json
+AddType application/javascript .js
+AddType text/css .css
+AddType text/html .html
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Compress responses
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml
+</IfModule>
+
+# Browser caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/json "access plus 1 week"
+</IfModule>
+

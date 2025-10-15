@@ -1,0 +1,1269 @@
+/* MecTrack Custom Styles */
+
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Landing Page */
+.landing-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem 0;
+}
+
+.landing-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.system-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    height: 100%;
+}
+
+.system-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary-color);
+}
+
+.system-icon {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.system-features {
+    margin: 1rem 0;
+    text-align: left;
+}
+
+.system-features small {
+    display: block;
+    margin: 0.25rem 0;
+}
+
+.credential-card {
+    background: rgba(248, 249, 250, 0.8);
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 0.5rem 0;
+    border-left: 4px solid var(--primary-color);
+}
+
+.credential-card h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.credential-card code {
+    background: rgba(13, 110, 253, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+/* Login Screen */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-card h2 {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Navigation */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+/* Sidebar */
+.card {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.card-header {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+    border: none;
+}
+
+.card-header h5 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Navigation Links */
+.nav-link {
+    color: var(--dark-color);
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    margin: 2px 0;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: var(--light-color);
+    color: var(--primary-color);
+}
+
+.nav-link.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Content Sections */
+.content-section {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Stats Cards */
+.stats-card {
+    background: linear-gradient(135deg, var(--primary-color), #0a58ca);
+    color: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stats-card .stats-icon {
+    font-size: 2.5rem;
+    opacity: 0.8;
+}
+
+.stats-card .stats-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+
+.stats-card .stats-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Form Elements */
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.input-group-text {
+    background-color: var(--light-color);
+    border: 2px solid #e9ecef;
+    border-radius: 8px 0 0 8px;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), #0a58ca);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0a58ca, var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success-color), #146c43);
+    border: none;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #146c43, var(--success-color));
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(25, 135, 84, 0.4);
+}
+
+/* Search Results */
+.search-result-item {
+    padding: 1rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-result-item:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+.search-result-item.selected {
+    border-color: var(--primary-color);
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+/* Service and Parts Lists */
+.service-item, .part-item {
+    background-color: var(--light-color);
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.service-item-header, .part-item-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+/* Cost Summary */
+.cost-summary {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+/* Alerts */
+.alert {
+    border-radius: 10px;
+    border: none;
+    padding: 1rem 1.5rem;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #155724;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    color: #721c24;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-card {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .stats-card {
+        margin-bottom: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0a58ca;
+}
+
+/* Table Styles */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table thead th {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+.table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Badge Styles */
+.badge {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* Utility Classes */
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary-color), #0a58ca);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.shadow-custom {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.border-gradient {
+    border: 2px solid;
+    border-image: linear-gradient(135deg, var(--primary-color), #0a58ca) 1;
+}
+
+/* Service Types Management Styles */
+.service-types-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.service-type-card {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.service-type-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 20px rgba(13, 110, 253, 0.1);
+    transform: translateY(-2px);
+}
+
+.service-type-card.inactive {
+    opacity: 0.6;
+    background-color: #f8f9fa;
+}
+
+.service-type-card.inactive::before {
+    content: "DESACTIVADO";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.service-type-header {
+    display: flex;
+    justify-content: between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.service-type-info h6 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.service-type-info p {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.service-type-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--success-color);
+}
+
+.service-type-time {
+    color: var(--warning-color);
+    font-weight: 500;
+}
+
+.service-type-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.service-type-actions .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Form Section for Service Types */
+.form-section {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-section h5 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+/* Service Type Form Specific Styles */
+#serviceTypeDescription {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.service-type-cost-input {
+    position: relative;
+}
+
+.service-type-cost-input::before {
+    content: "$";
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    font-weight: 600;
+    z-index: 10;
+}
+
+/* Responsive adjustments for service types */
+@media (max-width: 768px) {
+    .service-type-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .service-type-actions {
+        flex-wrap: wrap;
+    }
+    
+    .service-types-container {
+        padding: 1rem;
+    }
+}
+
+/* Parts Management Styles */
+.parts-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.part-card {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.part-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 20px rgba(13, 110, 253, 0.1);
+    transform: translateY(-2px);
+}
+
+.part-card.inactive {
+    opacity: 0.6;
+    background-color: #f8f9fa;
+}
+
+.part-card.inactive::before {
+    content: "DESACTIVADO";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.part-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.part-info h6 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.part-info p {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.part-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.part-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.part-cost {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #dc3545;
+}
+
+.part-final-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--success-color);
+}
+
+.part-markup {
+    color: var(--warning-color);
+    font-weight: 500;
+}
+
+.part-category {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.part-brand {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.part-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.part-actions .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+}
+
+/* Part Form Specific Styles */
+#partDescription {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.part-cost-input {
+    position: relative;
+}
+
+.part-cost-input::before {
+    content: "$";
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    font-weight: 600;
+    z-index: 10;
+}
+
+/* Responsive adjustments for parts */
+@media (max-width: 768px) {
+    .part-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .part-details {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .part-actions {
+        flex-wrap: wrap;
+    }
+    
+    .parts-container {
+        padding: 1rem;
+    }
+}
+
+/* Reports Management Styles */
+.reports-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.report-option {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.report-option:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 20px rgba(13, 110, 253, 0.1);
+    transform: translateY(-2px);
+}
+
+.report-icon {
+    background: linear-gradient(135deg, var(--primary-color), #0056b3);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.report-info h6 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.report-info p {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+/* Report Results */
+.report-summary {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.report-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.stat-change {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.stat-change.positive {
+    color: var(--success-color);
+}
+
+.stat-change.negative {
+    color: var(--danger-color);
+}
+
+/* Report Table */
+.report-table-container {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.report-table th,
+.report-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.report-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.report-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Report Charts */
+.report-chart {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chart-placeholder {
+    height: 300px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Category Stats */
+.category-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.category-card {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.category-name {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.category-count {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--success-color);
+    margin-bottom: 0.25rem;
+}
+
+.category-value {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Filter Section */
+.filter-group {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-group h6 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+/* Export Button */
+.export-section {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.export-section h6 {
+    color: #155724;
+    margin-bottom: 0.5rem;
+}
+
+.export-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Responsive adjustments for reports */
+@media (max-width: 768px) {
+    .report-option {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .report-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .category-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .export-buttons {
+        flex-direction: column;
+    }
+    
+    .reports-container {
+        padding: 1rem;
+    }
+    
+    .report-table-container {
+        overflow-x: auto;
+    }
+}
+
+/* ================================
+   GESTIÓN DE CLIENTES STYLES
+   ================================ */
+.customer-table {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.customer-table th {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 1rem 0.75rem;
+}
+
+.customer-table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #eee;
+}
+
+.customer-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.customer-form-section {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #28a745;
+}
+
+.customer-info-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #28a745;
+}
+
+.customer-status-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+}
+
+.customer-action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.customer-action-buttons .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.vehicle-count-badge {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+}
+
+/* ================================
+   GESTIÓN DE VEHÍCULOS STYLES
+   ================================ */
+.vehicle-table {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 1rem 0.75rem;
+}
+
+.vehicle-table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #eee;
+}
+
+.vehicle-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.vehicle-form-section {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #667eea;
+}
+
+.vehicle-info-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #28a745;
+}
+
+.vehicle-status-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+}
+
+.vehicle-action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.vehicle-action-buttons .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* ================================
+   NUEVA REPARACIÓN STYLES
+   ================================ */
+
+/* Service and Part Items */
+.service-item, .part-item {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.service-item-header, .part-item-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.service-item-title, .part-item-title {
+    font-weight: 600;
+    color: #495057;
+    margin: 0;
+}
+
+.remove-item-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.remove-item-btn:hover {
+    background: #c82333;
+}
+
+/* Cost Summary */
+.cost-summary {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.cost-summary.total {
+    background: #e3f2fd;
+    border-color: #2196f3;
+}
+
+.cost-summary label {
+    display: block;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.cost-summary span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.cost-summary.total span {
+    color: #2196f3;
+    font-size: 1.8rem;
+}
+
+/* Service/Part Selection */
+.service-selection, .part-selection {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    margin-bottom: 1rem;
+}
+
+.service-selection .form-group,
+.part-selection .form-group {
+    flex: 1;
+}
+
+.service-selection .form-group:last-child,
+.part-selection .form-group:last-child {
+    flex: 0 0 100px;
+}
+
+/* Vehicle Info Display */
+.vehicle-info {
+    background: #e3f2fd;
+    border: 1px solid #bbdefb;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.vehicle-info h6 {
+    color: #1976d2;
+    margin-bottom: 0.5rem;
+}
+
+.vehicle-details {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.vehicle-detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.vehicle-detail label {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 0.2rem;
+}
+
+.vehicle-detail span {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Responsive adjustments for new repair */
+@media (max-width: 768px) {
+    .service-selection, .part-selection {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .vehicle-details {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .cost-summary {
+        margin-bottom: 1rem;
+    }
+}

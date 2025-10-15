@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MecTrack - Sistema de Control Histórico de Reparaciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .main-container { 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 2rem 0;
+        }
+        
+        .landing-card { 
+            background: white; 
+            padding: 3rem; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .login-card { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 15px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
+            width: 100%; 
+            max-width: 400px; 
+        }
+        
+        .dashboard-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: #0d6efd;
+        }
+        
+        .user-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .hidden { display: none !important; }
+        
+        .mechanics-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .mechanic-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .mechanic-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mechanic-card.inactive {
+            opacity: 0.6;
+            background: #e9ecef;
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-unified {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-unified:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landingPage" class="main-container">
+        <div class="landing-card text-center">
+            <div class="mb-4">
+                <i class="bi bi-wrench display-1 text-primary"></i>
+                <h1 class="display-4 fw-bold text-primary mt-3">MecTrack</h1>
+                <p class="lead text-muted">Sistema de Control Histórico de Reparaciones</p>
+            </div>
+            
+            <!-- Test Button -->
+            <div class="alert alert-info mb-4">
+                <button data-action="test" class="btn btn-info btn-sm">🧪 Probar JavaScript</button>
+                <small class="ms-2">Haz clic para verificar que el JavaScript funciona</small>
+            </div>
+            
+            <!-- Unified Access Button -->
+            <div class="mb-4">
+                <button data-action="login" class="btn btn-unified btn-lg">
+                    <i class="bi bi-box-arrow-in-right"></i> Acceder al Sistema
+                </button>
+                <p class="text-muted mt-2">Un solo acceso para mecánicos y administradores</p>
+            </div>
+            
+            <!-- Credentials Info -->
+            <div class="mt-5">
+                <h5 class="text-muted">Credenciales de Prueba</h5>
+                <div class="row text-start">
+                    <div class="col-md-6">
+                        <div class="alert alert-light">
+                            <h6><i class="bi bi-person-gear text-primary"></i> Mecánicos</h6>
+                            <small class="d-block">Usuario: <code>jperez</code> | Contraseña: <code>123456</code></small>
+                            <small class="d-block">Usuario: <code>mgarcia</code> | Contraseña: <code>123456</code></small>
+                            <small class="d-block">Usuario: <code>clopez</code> | Contraseña: <code>123456</code></small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="alert alert-light">
+                            <h6><i class="bi bi-gear text-warning"></i> Administrador</h6>
+                            <small class="d-block">Usuario: <code>admin</code> | Contraseña: <code>admin123</code></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unified Login Screen -->
+    <div id="loginScreen" class="main-container hidden">
+        <div class="login-card">
+            <div class="text-center mb-4">
+                <i class="bi bi-box-arrow-in-right display-4 text-primary"></i>
+                <h2 class="mt-3">Acceso al Sistema</h2>
+                <p class="text-muted">Ingresa tus credenciales para acceder</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Usuario</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                </button>
+            </form>
+            
+            <div class="text-center mt-3">
+                <button data-action="back" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </button>
+            </div>
+            
+            <div id="loginError" class="alert alert-danger mt-3 hidden"></div>
+        </div>
+    </div>
+
+    <!-- Mechanic Dashboard -->
+    <div id="mechanicDashboard" class="main-container hidden">
+        <div class="dashboard-card">
+            <div class="user-info">
+                <h4><i class="bi bi-person-gear"></i> Panel del Mecánico</h4>
+                <p class="mb-0">Bienvenido, <span id="mechanicName"></span></p>
+            </div>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="feature-card" data-action="mechanic-new-repair">
+                        <div class="text-center">
+                            <i class="bi bi-plus-circle display-4 text-success mb-3"></i>
+                            <h5>Nueva Reparación</h5>
+                            <p class="text-muted">Registrar una nueva reparación</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="feature-card" data-action="mechanic-history">
+                        <div class="text-center">
+                            <i class="bi bi-clock-history display-4 text-info mb-3"></i>
+                            <h5>Historial de Reparaciones</h5>
+                            <p class="text-muted">Ver reparaciones anteriores</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="feature-card" data-action="mechanic-customers">
+                        <div class="text-center">
+                            <i class="bi bi-people display-4 text-warning mb-3"></i>
+                            <h5>Clientes</h5>
+                            <p class="text-muted">Gestionar clientes</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="feature-card" data-action="mechanic-vehicles">
+                        <div class="text-center">
+                            <i class="bi bi-car-front display-4 text-primary mb-3"></i>
+                            <h5>Vehículos</h5>
+                            <p class="text-muted">Gestionar vehículos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button data-action="logout" class="btn btn-outline-danger">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="main-container hidden">
+        <div class="dashboard-card">
+            <div class="user-info">
+                <h4><i class="bi bi-gear"></i> Panel de Administración</h4>
+                <p class="mb-0">Bienvenido, Administrador</p>
+            </div>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="feature-card" data-action="admin-mechanics">
+                        <div class="text-center">
+                            <i class="bi bi-person-gear display-4 text-primary mb-3"></i>
+                            <h5>Gestionar Mecánicos</h5>
+                            <p class="text-muted">Administrar mecánicos del taller</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="feature-card" data-action="admin-services">
+                        <div class="text-center">
+                            <i class="bi bi-tools display-4 text-success mb-3"></i>
+                            <h5>Tipos de Servicios</h5>
+                            <p class="text-muted">Gestionar servicios disponibles</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="feature-card" data-action="admin-parts">
+                        <div class="text-center">
+                            <i class="bi bi-gear display-4 text-warning mb-3"></i>
+                            <h5>Repuestos</h5>
+                            <p class="text-muted">Gestionar inventario de repuestos</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="feature-card" data-action="admin-reports">
+                        <div class="text-center">
+                            <i class="bi bi-graph-up display-4 text-info mb-3"></i>
+                            <h5>Reportes</h5>
+                            <p class="text-muted">Ver reportes del sistema</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="feature-card" data-action="admin-customers">
+                        <div class="text-center">
+                            <i class="bi bi-people display-4 text-success mb-3"></i>
+                            <h5>Clientes</h5>
+                            <p class="text-muted">Gestionar clientes del sistema</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-card" data-action="admin-vehicles">
+                        <div class="text-center">
+                            <i class="bi bi-car-front display-4 text-warning mb-3"></i>
+                            <h5>Vehículos</h5>
+                            <p class="text-muted">Gestionar vehículos del sistema</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button data-action="logout" class="btn btn-outline-danger">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mechanics Management Section -->
+    <div id="mechanicsManagement" class="main-container hidden">
+        <div class="mechanics-container">
+            <div class="user-info">
+                <h4><i class="bi bi-person-gear"></i> Gestión de Mecánicos</h4>
+                <p class="mb-0">Administrar mecánicos del taller</p>
+            </div>
+            
+            <!-- Add/Edit Mechanic Form -->
+            <div class="form-section">
+                <h5 id="formTitle">Agregar Nuevo Mecánico</h5>
+                <form id="mechanicForm">
+                    <input type="hidden" id="mechanicId" value="">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="mechanicFormName" class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" id="mechanicFormName" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="mechanicUsername" class="form-label">Usuario</label>
+                                <input type="text" class="form-control" id="mechanicUsername" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="mechanicPassword" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="mechanicPassword" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="mechanicEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="mechanicEmail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="mechanicPhone" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="mechanicPhone">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="mechanicSpecialty" class="form-label">Especialidad</label>
+                                <select class="form-select" id="mechanicSpecialty">
+                                    <option value="">Seleccionar especialidad</option>
+                                    <option value="Motor">Motor</option>
+                                    <option value="Transmisión">Transmisión</option>
+                                    <option value="Frenos">Frenos</option>
+                                    <option value="Suspensión">Suspensión</option>
+                                    <option value="Eléctrico">Eléctrico</option>
+                                    <option value="General">General</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-lg"></i> Guardar
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-action="cancel-mechanic">
+                            <i class="bi bi-x-lg"></i> Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Mechanics List -->
+            <div class="mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Lista de Mecánicos</h5>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" data-action="add-mechanic">
+                            <i class="bi bi-plus-lg"></i> Agregar Mecánico
+                        </button>
+                        <button class="btn btn-outline-secondary" data-action="back-to-admin">
+                            <i class="bi bi-arrow-left"></i> Volver al Panel
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="mechanicsList">
+                    <!-- Mechanics will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Messages -->
+            <div id="mechanicMessage" class="alert mt-3 hidden"></div>
+        </div>
+    </div>
+
+    <!-- Service Types Management -->
+    <div id="serviceTypesManagement" class="main-container hidden">
+        <div class="mechanics-container">
+            <div class="user-info">
+                <h4><i class="bi bi-tools"></i> Gestión de Tipos de Servicios</h4>
+                <p class="mb-0">Administrar servicios disponibles en el taller</p>
+            </div>
+            
+            <!-- Add/Edit Service Type Form -->
+            <div class="form-section">
+                <h5 id="serviceTypeFormTitle">Agregar Nuevo Tipo de Servicio</h5>
+                <form id="serviceTypeForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="serviceTypeName" class="form-label">Nombre del Servicio *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-tools"></i></span>
+                                    <input type="text" class="form-control" id="serviceTypeName" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="serviceTypeLaborCost" class="form-label">Costo de Mano de Obra *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="serviceTypeLaborCost" step="0.01" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="serviceTypeEstimatedTime" class="form-label">Tiempo Estimado (minutos)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                                    <input type="number" class="form-control" id="serviceTypeEstimatedTime" min="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="serviceTypeDescription" class="form-label">Descripción</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                            <textarea class="form-control" id="serviceTypeDescription" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-lg"></i> Guardar
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-action="cancel-service-type">
+                            <i class="bi bi-x-lg"></i> Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Service Types List -->
+            <div class="mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Lista de Tipos de Servicios</h5>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" data-action="add-service-type">
+                            <i class="bi bi-plus-lg"></i> Agregar Servicio
+                        </button>
+                        <button class="btn btn-outline-secondary" data-action="back-to-admin">
+                            <i class="bi bi-arrow-left"></i> Volver al Panel
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="serviceTypesList">
+                    <!-- Service types will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Messages -->
+            <div id="serviceTypeMessage" class="alert mt-3 hidden"></div>
+        </div>
+    </div>
+
+    <!-- Parts Management -->
+    <div id="partsManagement" class="main-container hidden">
+        <div class="mechanics-container">
+            <div class="user-info">
+                <h4><i class="bi bi-gear"></i> Gestión de Repuestos</h4>
+                <p class="mb-0">Administrar inventario de repuestos del taller</p>
+            </div>
+            
+            <!-- Add/Edit Part Form -->
+            <div class="form-section">
+                <h5 id="partFormTitle">Agregar Nuevo Repuesto</h5>
+                <form id="partForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="partName" class="form-label">Nombre del Repuesto *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-gear"></i></span>
+                                    <input type="text" class="form-control" id="partName" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="partNumber" class="form-label">Número de Parte</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-hash"></i></span>
+                                    <input type="text" class="form-control" id="partNumber">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="partCategory" class="form-label">Categoría</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-tags"></i></span>
+                                    <select class="form-select" id="partCategory">
+                                        <option value="">Seleccionar categoría</option>
+                                        <option value="Filtros">Filtros</option>
+                                        <option value="Lubricantes">Lubricantes</option>
+                                        <option value="Frenos">Frenos</option>
+                                        <option value="Encendido">Encendido</option>
+                                        <option value="Motor">Motor</option>
+                                        <option value="Suspensión">Suspensión</option>
+                                        <option value="Eléctrico">Eléctrico</option>
+                                        <option value="Carrocería">Carrocería</option>
+                                        <option value="Otros">Otros</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="partBrand" class="form-label">Marca</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-award"></i></span>
+                                    <input type="text" class="form-control" id="partBrand">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="partCost" class="form-label">Costo de Compra *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="partCost" step="0.01" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="partMarkup" class="form-label">% Ganancia</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">%</span>
+                                    <input type="number" class="form-control" id="partMarkup" step="0.01" min="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="partFinalPrice" class="form-label">Precio Final *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="partFinalPrice" step="0.01" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="partDescription" class="form-label">Descripción</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                            <textarea class="form-control" id="partDescription" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-lg"></i> Guardar
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-action="cancel-part">
+                            <i class="bi bi-x-lg"></i> Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Parts List -->
+            <div class="mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Lista de Repuestos</h5>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" data-action="add-part">
+                            <i class="bi bi-plus-lg"></i> Agregar Repuesto
+                        </button>
+                        <button class="btn btn-outline-secondary" data-action="back-to-admin">
+                            <i class="bi bi-arrow-left"></i> Volver al Panel
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="partsList">
+                    <!-- Parts will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Messages -->
+            <div id="partMessage" class="alert mt-3 hidden"></div>
+        </div>
+    </div>
+
+            <!-- Gestión de Vehículos -->
+            <div id="vehiclesManagement" class="main-container hidden">
+                <div class="mechanics-container">
+                    <div class="user-info">
+                        <h4><i class="bi bi-car-front"></i> Gestión de Vehículos</h4>
+                        <p class="mb-0">Administrar vehículos del sistema</p>
+                    </div>
+                    
+                    <!-- Formulario de Vehículo -->
+                    <form id="vehicleForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-section">
+                                    <h5><i class="bi bi-car-front"></i> Información del Vehículo</h5>
+                                    <div class="mb-3">
+                                        <label for="vehicleCustomer" class="form-label">Cliente *</label>
+                                        <select class="form-select" id="vehicleCustomer" required>
+                                            <option value="">Seleccionar cliente...</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="vehicleMake" class="form-label">Marca *</label>
+                                        <input type="text" class="form-control" id="vehicleMake" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="vehicleModel" class="form-label">Modelo *</label>
+                                        <input type="text" class="form-control" id="vehicleModel" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="vehicleYear" class="form-label">Año *</label>
+                                        <input type="number" class="form-control" id="vehicleYear" min="1900" max="2030" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-section">
+                                    <h5><i class="bi bi-info-circle"></i> Detalles Adicionales</h5>
+                                    <div class="mb-3">
+                                        <label for="vehicleLicensePlate" class="form-label">Placa</label>
+                                        <input type="text" class="form-control" id="vehicleLicensePlate">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="vehicleVin" class="form-label">VIN</label>
+                                        <input type="text" class="form-control" id="vehicleVin" maxlength="17">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="vehicleColor" class="form-label">Color</label>
+                                        <input type="text" class="form-control" id="vehicleColor">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="vehicleEngineType" class="form-label">Tipo de Motor</label>
+                                        <select class="form-select" id="vehicleEngineType">
+                                            <option value="">Seleccionar...</option>
+                                            <option value="Gasolina">Gasolina</option>
+                                            <option value="Diesel">Diesel</option>
+                                            <option value="Híbrido">Híbrido</option>
+                                            <option value="Eléctrico">Eléctrico</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="vehicleMileage" class="form-label">Kilometraje</label>
+                                        <input type="number" class="form-control" id="vehicleMileage" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Botones de Acción -->
+                        <div class="action-buttons">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Guardar Vehículo
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-action="reset-vehicle-form">
+                                <i class="bi bi-arrow-clockwise"></i> Limpiar Formulario
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" data-action="back-to-admin">
+                                <i class="bi bi-house"></i> Panel Principal
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Messages -->
+                    <div id="vehicleMessage" class="alert mt-3 hidden"></div>
+                    
+                    <!-- Lista de Vehículos -->
+                    <div class="form-section">
+                        <h5><i class="bi bi-list-ul"></i> Vehículos Registrados</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped vehicle-table">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Marca</th>
+                                        <th>Modelo</th>
+                                        <th>Año</th>
+                                        <th>Placa</th>
+                                        <th>Color</th>
+                                        <th>Motor</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="vehiclesList">
+                                    <!-- Los vehículos se cargarán dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestión de Clientes -->
+            <div id="customersManagement" class="main-container hidden">
+                <div class="mechanics-container">
+                    <div class="user-info">
+                        <h4><i class="bi bi-people"></i> Gestión de Clientes</h4>
+                        <p class="mb-0">Administrar clientes del sistema</p>
+                    </div>
+                    
+                    <!-- Formulario de Cliente -->
+                    <form id="customerForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-section">
+                                    <h5><i class="bi bi-person"></i> Información Personal</h5>
+                                    <div class="mb-3">
+                                        <label for="customerName" class="form-label">Nombre *</label>
+                                        <input type="text" class="form-control" id="customerName" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="customerLastName" class="form-label">Apellido *</label>
+                                        <input type="text" class="form-control" id="customerLastName" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="customerPhone" class="form-label">Teléfono *</label>
+                                        <input type="tel" class="form-control" id="customerPhone" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-section">
+                                    <h5><i class="bi bi-info-circle"></i> Información de Contacto</h5>
+                                    <div class="mb-3">
+                                        <label for="customerEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="customerEmail">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="customerAddress" class="form-label">Dirección</label>
+                                        <textarea class="form-control" id="customerAddress" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Botones de Acción -->
+                        <div class="action-buttons">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Guardar Cliente
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-action="reset-customer-form">
+                                <i class="bi bi-arrow-clockwise"></i> Limpiar Formulario
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" data-action="back-to-admin">
+                                <i class="bi bi-house"></i> Panel Principal
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Messages -->
+                    <div id="customerMessage" class="alert mt-3 hidden"></div>
+                    
+                    <!-- Lista de Clientes -->
+                    <div class="form-section">
+                        <h5><i class="bi bi-list-ul"></i> Clientes Registrados</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped customer-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Teléfono</th>
+                                        <th>Email</th>
+                                        <th>Dirección</th>
+                                        <th>Vehículos</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customersList">
+                                    <!-- Los clientes se cargarán dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nueva Reparación -->
+            <div id="newRepairManagement" class="main-container hidden">
+                <div class="mechanics-container">
+                    <div class="user-info">
+                        <h4><i class="bi bi-wrench"></i> Nueva Reparación</h4>
+                        <p class="mb-0">Registrar nueva reparación de vehículo</p>
+                    </div>
+                    
+                    <form id="newRepairForm">
+                        <div class="row">
+                            <!-- Información del Vehículo -->
+                            <div class="col-md-6">
+                                <div class="form-section">
+                                    <h5><i class="bi bi-car-front"></i> Información del Vehículo</h5>
+                                    <div class="mb-3">
+                                        <label for="vehicleSelect" class="form-label">Seleccionar Vehículo</label>
+                                        <select class="form-select" id="vehicleSelect" required>
+                                            <option value="">Seleccionar vehículo...</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button type="button" class="btn btn-outline-primary" data-action="add-new-vehicle">
+                                            <i class="bi bi-plus-circle"></i> Agregar Nuevo Vehículo
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Modal para agregar nuevo vehículo -->
+                                    <div id="newVehicleModal" class="modal fade" tabindex="-1">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        <i class="bi bi-car-front"></i> Agregar Nuevo Vehículo
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="newVehicleForm">
+                                                        <div class="row">
+                                                            <!-- Información del Cliente -->
+                                                            <div class="col-md-6">
+                                                                <h6><i class="bi bi-person"></i> Información del Cliente</h6>
+                                                                <div class="mb-3">
+                                                                    <label for="newCustomerName" class="form-label">Nombre</label>
+                                                                    <input type="text" class="form-control" id="newCustomerName" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="newCustomerLastName" class="form-label">Apellido</label>
+                                                                    <input type="text" class="form-control" id="newCustomerLastName" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="newCustomerPhone" class="form-label">Teléfono</label>
+                                                                    <input type="text" class="form-control" id="newCustomerPhone">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="newCustomerEmail" class="form-label">Email</label>
+                                                                    <input type="email" class="form-control" id="newCustomerEmail">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="newCustomerAddress" class="form-label">Dirección</label>
+                                                                    <textarea class="form-control" id="newCustomerAddress" rows="2"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <!-- Información del Vehículo -->
+                                                            <div class="col-md-6">
+                                                                <h6><i class="bi bi-car-front"></i> Información del Vehículo</h6>
+                                                                <div class="mb-3">
+                                                                    <label for="vehicleMake" class="form-label">Marca</label>
+                                                                    <input type="text" class="form-control" id="newVehicleMake" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="vehicleModel" class="form-label">Modelo</label>
+                                                                    <input type="text" class="form-control" id="newVehicleModel" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="vehicleYear" class="form-label">Año</label>
+                                                                    <input type="number" class="form-control" id="newVehicleYear" min="1990" max="2024" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="vehicleLicensePlate" class="form-label">Placa</label>
+                                                                    <input type="text" class="form-control" id="newVehicleLicensePlate">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="vehicleColor" class="form-label">Color</label>
+                                                                    <input type="text" class="form-control" id="newVehicleColor">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="vehicleEngineType" class="form-label">Tipo de Motor</label>
+                                                                    <select class="form-select" id="newVehicleEngineType">
+                                                                        <option value="Gasolina">Gasolina</option>
+                                                                        <option value="Diésel">Diésel</option>
+                                                                        <option value="Híbrido">Híbrido</option>
+                                                                        <option value="Eléctrico">Eléctrico</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="vehicleMileage" class="form-label">Kilometraje</label>
+                                                                    <input type="number" class="form-control" id="newVehicleMileage" min="0">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                        <i class="bi bi-x-circle"></i> Cancelar
+                                                    </button>
+                                                    <button type="button" class="btn btn-success" data-action="save-new-vehicle">
+                                                        <i class="bi bi-check-circle"></i> Guardar Vehículo
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Información de la Reparación -->
+                            <div class="col-md-6">
+                                <div class="form-section">
+                                    <h5><i class="bi bi-calendar-event"></i> Información de la Reparación</h5>
+                                    <div class="mb-3">
+                                        <label for="repairDate" class="form-label">Fecha de Reparación</label>
+                                        <input type="date" class="form-control" id="repairDate" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="repairDescription" class="form-label">Descripción</label>
+                                        <textarea class="form-control" id="repairDescription" rows="3" 
+                                                  placeholder="Descripción del trabajo realizado..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="repairNotes" class="form-label">Notas Adicionales</label>
+                                        <textarea class="form-control" id="repairNotes" rows="2" 
+                                                  placeholder="Notas adicionales..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Servicios -->
+                        <div class="form-section">
+                            <h5><i class="bi bi-tools"></i> Servicios Realizados</h5>
+                            <div id="servicesList" class="mb-3">
+                                <!-- Los servicios se agregarán dinámicamente -->
+                            </div>
+                            
+                            <!-- Modal para seleccionar servicios -->
+                            <div id="serviceSelectionModal" class="modal fade" tabindex="-1">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">
+                                                <i class="bi bi-tools"></i> Seleccionar Servicio
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="serviceSelectionList">
+                                                <!-- Los servicios se cargarán dinámicamente -->
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                <i class="bi bi-x-circle"></i> Cancelar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="btn btn-outline-primary" data-action="add-service">
+                                <i class="bi bi-plus-circle"></i> Agregar Servicio
+                            </button>
+                        </div>
+                        
+                        <!-- Repuestos -->
+                        <div class="form-section">
+                            <h5><i class="bi bi-gear"></i> Repuestos Utilizados</h5>
+                            <div id="repairPartsList" class="mb-3">
+                                <!-- Los repuestos se agregarán dinámicamente -->
+                            </div>
+                            
+                            <!-- Modal para seleccionar repuestos -->
+                            <div id="partSelectionModal" class="modal fade" tabindex="-1">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">
+                                                <i class="bi bi-gear"></i> Seleccionar Repuesto
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="partSelectionList">
+                                                <!-- Los repuestos se cargarán dinámicamente -->
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                <i class="bi bi-x-circle"></i> Cancelar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="btn btn-outline-primary" data-action="add-part">
+                                <i class="bi bi-plus-circle"></i> Agregar Repuesto
+                            </button>
+                        </div>
+                        
+                        <!-- Resumen de Costos -->
+                        <div class="form-section">
+                            <h5><i class="bi bi-calculator"></i> Resumen de Costos</h5>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="cost-summary">
+                                        <label>Mano de Obra:</label>
+                                        <span id="totalLaborCost">$0.00</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="cost-summary">
+                                        <label>Repuestos:</label>
+                                        <span id="totalPartsCost">$0.00</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="cost-summary total">
+                                        <label>Total:</label>
+                                        <span id="totalCost">$0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Botones de Acción -->
+                        <div class="action-buttons">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Guardar Reparación
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-action="cancel-repair">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" data-action="back-to-mechanic">
+                                <i class="bi bi-house"></i> Panel Principal
+                            </button>
+                            <button type="button" class="btn btn-warning" onclick="testRepairButton()">
+                                <i class="bi bi-bug"></i> Test Botón
+                            </button>
+                            <button type="button" class="btn btn-info" onclick="testSaveRepair()">
+                                <i class="bi bi-save"></i> Test Guardar
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="testReportModal()">
+                                <i class="bi bi-file-text"></i> Test Reporte
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Messages -->
+                    <div id="repairMessage" class="alert mt-3 hidden"></div>
+                </div>
+            </div>
+
+            <!-- Reports Management -->
+            <div id="reportsManagement" class="main-container hidden">
+        <div class="mechanics-container">
+            <div class="user-info">
+                <h4><i class="bi bi-graph-up"></i> Centro de Reportes</h4>
+                <p class="mb-0">Generar reportes detallados del sistema</p>
+            </div>
+            
+            <!-- Report Selection -->
+            <div class="form-section">
+                <h5>Seleccionar Tipo de Reporte</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="report-option" data-report="summary">
+                            <div class="report-icon">
+                                <i class="bi bi-speedometer2"></i>
+                            </div>
+                            <div class="report-info">
+                                <h6>Resumen General</h6>
+                                <p>Vista general del sistema con estadísticas principales</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="report-option" data-report="mechanics">
+                            <div class="report-icon">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="report-info">
+                                <h6>Reporte de Mecánicos</h6>
+                                <p>Lista y estadísticas de mecánicos del taller</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="report-option" data-report="service-types">
+                            <div class="report-icon">
+                                <i class="bi bi-tools"></i>
+                            </div>
+                            <div class="report-info">
+                                <h6>Reporte de Servicios</h6>
+                                <p>Tipos de servicios y costos de mano de obra</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="report-option" data-report="parts">
+                            <div class="report-icon">
+                                <i class="bi bi-gear"></i>
+                            </div>
+                            <div class="report-info">
+                                <h6>Reporte de Repuestos</h6>
+                                <p>Inventario y análisis de costos de repuestos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="report-option" data-report="customers">
+                            <div class="report-icon">
+                                <i class="bi bi-person-lines-fill"></i>
+                            </div>
+                            <div class="report-info">
+                                <h6>Reporte de Clientes</h6>
+                                <p>Lista de clientes y sus vehículos</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="report-option" data-report="vehicles">
+                            <div class="report-icon">
+                                <i class="bi bi-car-front"></i>
+                            </div>
+                            <div class="report-info">
+                                <h6>Reporte de Vehículos</h6>
+                                <p>Vehículos registrados por marca y modelo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="report-option" data-report="repairs">
+                            <div class="report-icon">
+                                <i class="bi bi-wrench"></i>
+                            </div>
+                            <div class="report-info">
+                                <h6>Reporte de Reparaciones</h6>
+                                <p>Historial de reparaciones y análisis de costos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filters Section -->
+            <div id="filtersSection" class="form-section hidden">
+                <h5>Filtros del Reporte</h5>
+                <form id="reportFilters">
+                    <div id="filtersContent">
+                        <!-- Filters will be loaded dynamically -->
+                    </div>
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-file-earmark-text"></i> Generar Reporte
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-action="back-to-reports">
+                            <i class="bi bi-arrow-left"></i> Volver a Reportes
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Report Results -->
+            <div id="reportResults" class="mt-4 hidden">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 id="reportTitle">Resultados del Reporte</h5>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" data-action="export-report">
+                            <i class="bi bi-download"></i> Exportar
+                        </button>
+                        <button class="btn btn-outline-secondary" data-action="back-to-filters">
+                            <i class="bi bi-arrow-left"></i> Volver a Filtros
+                        </button>
+                        <button class="btn btn-outline-secondary" data-action="back-to-admin">
+                            <i class="bi bi-house"></i> Panel Principal
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="reportContent">
+                    <!-- Report content will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Messages -->
+            <div id="reportMessage" class="alert mt-3 hidden"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
