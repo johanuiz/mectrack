@@ -7,9 +7,11 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
     const db = new Database();
     try {
+        console.log('📝 Login attempt:', req.body);
         const { username, password } = req.body;
 
         if (!username || !password) {
+            console.log('❌ Missing credentials');
             db.close();
             return res.status(400).json({
                 success: false,
@@ -17,9 +19,12 @@ router.post('/login', async (req, res) => {
             });
         }
 
+        console.log('🔍 Searching for mechanic:', username);
         const mechanic = await db.getMechanicByUsername(username);
+        console.log('👤 Mechanic found:', mechanic ? 'Yes' : 'No');
 
         if (!mechanic) {
+            console.log('❌ Mechanic not found');
             db.close();
             return res.status(401).json({
                 success: false,
@@ -27,9 +32,12 @@ router.post('/login', async (req, res) => {
             });
         }
 
+        console.log('🔐 Comparing passwords...');
         const isValidPassword = await bcrypt.compare(password, mechanic.password_hash);
+        console.log('🔐 Password valid:', isValidPassword);
         
         if (!isValidPassword) {
+            console.log('❌ Invalid password');
             db.close();
             return res.status(401).json({
                 success: false,
@@ -38,6 +46,7 @@ router.post('/login', async (req, res) => {
         }
 
         if (!mechanic.is_active) {
+            console.log('❌ Account not active');
             db.close();
             return res.status(401).json({
                 success: false,
@@ -49,6 +58,7 @@ router.post('/login', async (req, res) => {
         // Por simplicidad, solo retornamos la información del mecánico
         const { password_hash, ...mechanicInfo } = mechanic;
 
+        console.log('✅ Login successful');
         db.close();
         res.json({
             success: true,
@@ -57,12 +67,13 @@ router.post('/login', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Error en login:', error);
+        console.error('❌ Error en login:', error);
+        console.error('Stack:', error.stack);
         db.close();
         res.status(500).json({
             success: false,
             message: 'Error interno del servidor',
-            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+            error: error.message
         });
     }
 });
