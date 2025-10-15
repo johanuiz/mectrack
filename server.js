@@ -15,6 +15,7 @@ const serviceRoutes = require('./routes/services');
 const repairRoutes = require('./routes/repairs');
 const reportsRoutes = require('./routes/reports');
 const adminRoutes = require('./routes/admin');
+const initializeDatabase = require('./scripts/init-database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -64,6 +65,25 @@ app.use('/api/services', serviceRoutes);
 app.use('/api/repairs', repairRoutes);
 app.use('/api/reports', reportsRoutes);
 app.use('/api/admin', adminRoutes);
+
+// Database initialization endpoint
+app.post('/api/init-db', async (req, res) => {
+    try {
+        console.log('🚀 Iniciando inicialización de base de datos...');
+        await initializeDatabase();
+        res.json({
+            success: true,
+            message: 'Base de datos inicializada exitosamente'
+        });
+    } catch (error) {
+        console.error('❌ Error inicializando base de datos:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error inicializando base de datos',
+            error: error.message
+        });
+    }
+});
 
 // Serve frontend
 app.get('/', (req, res) => {
