@@ -5,20 +5,22 @@ const router = express.Router();
 
 // Login del mecánico
 router.post('/login', async (req, res) => {
+    const db = new Database();
     try {
         const { username, password } = req.body;
 
         if (!username || !password) {
+            db.close();
             return res.status(400).json({
                 success: false,
                 message: 'Usuario y contraseña son requeridos'
             });
         }
 
-        const db = new Database();
         const mechanic = await db.getMechanicByUsername(username);
 
         if (!mechanic) {
+            db.close();
             return res.status(401).json({
                 success: false,
                 message: 'Credenciales inválidas'
@@ -28,6 +30,7 @@ router.post('/login', async (req, res) => {
         const isValidPassword = await bcrypt.compare(password, mechanic.password_hash);
         
         if (!isValidPassword) {
+            db.close();
             return res.status(401).json({
                 success: false,
                 message: 'Credenciales inválidas'
@@ -35,6 +38,7 @@ router.post('/login', async (req, res) => {
         }
 
         if (!mechanic.is_active) {
+            db.close();
             return res.status(401).json({
                 success: false,
                 message: 'Cuenta desactivada'
@@ -45,6 +49,7 @@ router.post('/login', async (req, res) => {
         // Por simplicidad, solo retornamos la información del mecánico
         const { password_hash, ...mechanicInfo } = mechanic;
 
+        db.close();
         res.json({
             success: true,
             message: 'Login exitoso',
@@ -53,9 +58,11 @@ router.post('/login', async (req, res) => {
 
     } catch (error) {
         console.error('Error en login:', error);
+        db.close();
         res.status(500).json({
             success: false,
-            message: 'Error interno del servidor'
+            message: 'Error interno del servidor',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
         });
     }
 });
