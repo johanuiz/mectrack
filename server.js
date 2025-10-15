@@ -70,7 +70,42 @@ app.use('/api/admin', adminRoutes);
 app.post('/api/init-db', async (req, res) => {
     try {
         console.log('🚀 Iniciando inicialización de base de datos...');
-        await initializeDatabase();
+        
+        // No usar el script de inicialización que cierra la base de datos
+        // En su lugar, crear los datos directamente
+        const Database = require('./database/db');
+        const bcrypt = require('bcryptjs');
+        const db = new Database();
+        
+        // Crear mecánicos de ejemplo
+        const mechanics = [
+            { name: 'Juan Pérez', username: 'jperez', password: '123456', email: 'juan@taller.com', phone: '555-0101' },
+            { name: 'María García', username: 'mgarcia', password: '123456', email: 'maria@taller.com', phone: '555-0102' },
+            { name: 'Carlos López', username: 'clopez', password: '123456', email: 'carlos@taller.com', phone: '555-0103' }
+        ];
+        
+        for (const mechanic of mechanics) {
+            const passwordHash = await bcrypt.hash(mechanic.password, 10);
+            const existing = await db.getMechanicByUsername(mechanic.username);
+            
+            if (!existing) {
+                await new Promise((resolve, reject) => {
+                    db.db.run(
+                        `INSERT INTO mechanics (name, username, password_hash, email, phone) 
+                         VALUES (?, ?, ?, ?, ?)`,
+                        [mechanic.name, mechanic.username, passwordHash, mechanic.email, mechanic.phone],
+                        function(err) {
+                            if (err) reject(err);
+                            else resolve(this.lastID);
+                        }
+                    );
+                });
+                console.log(`✅ Mecánico creado: ${mechanic.name}`);
+            }
+        }
+        
+        db.close();
+        
         res.json({
             success: true,
             message: 'Base de datos inicializada exitosamente'
